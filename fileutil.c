@@ -53,37 +53,35 @@ char (*loadFile2D(char *filename, int *size))[COLS]
 	}
 	
 	// initialize stuff
-	int index = 0;
-	*size = 0; // has random value in 2dmain so i set it to 0 here
+	int capacity = 10;
+	*size = 0;
 	
 	// Allocate memory for an 2D array, using COLS as the width.
-	char (*arr)[COLS] = malloc(*size * sizeof(char[COLS])); // the asterisk in front of size :(
+	char (*arr)[COLS] = malloc(capacity * sizeof(char[COLS]));
 	
 	// Read the file line by line into a buffer.
 	char * buffer = malloc(sizeof(char[COLS]));
 	
 	while(fgets(buffer, COLS, in) != NULL)
 	{
-		printf("index: %d size: %d |\t\t%s", index, *size, buffer);
+		printf("index: %d size: %d |\t\t%s", *size, capacity, buffer);
     	//   Trim newline.
 		char *newline = strchr(buffer, '\n');
-		if(newline != NULL) 
-		{
-			*newline = '\0';
-		}
+		if(newline) *newline = '\0';
+
 		//   Expand array if necessary (realloc).
-		if(index >= *size)
+		if(*size >= capacity)
 		{
 			printf("Yes\n");
-			*size += 1; // it doesn't like it when i put *size++;
-			arr = realloc(arr, *size * sizeof(char[COLS]));
+			capacity *= 1.5;
+			arr = realloc(arr, capacity * sizeof(char[COLS]));
 		}
-		printf("index: %d size: %d |\t\t%s\n", index, *size, buffer);
+		printf("index: %d size: %d |\t\t%s\n", *size, capacity, buffer);
 		//   Copy each line from the buffer into the array (use strcpy).
-		strcpy(*(arr + (index * COLS)), buffer);
+		strcpy(*(arr + ((*size) * sizeof(char[COLS]))), buffer);
 		
 		// Loop stuff
-		index++;
+		*size += 1;
 	}
 
     // Close the file.
