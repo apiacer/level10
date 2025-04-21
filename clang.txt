@@ -1,0 +1,4 @@
+clang 2dmain.c fileutil.c
+./a.out sample2.txt
+
+clang 2dmain.c fileutil.c ; ./a.out sample2.txt
