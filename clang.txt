@@ -2,3 +2,5 @@ clang 2dmain.c fileutil.c
 ./a.out sample2.txt
 
 clang 2dmain.c fileutil.c ; ./a.out sample2.txt
+
+clang -g 2dmain.c fileutil.c ; valgrind ./a.out sample2.txt
